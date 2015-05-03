@@ -1,0 +1,24 @@
+{
+  "name": "librarian-mongo-meta",
+  "version": "1.0.0",
+  "description": "LibrarianJS mysql metadata engine",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/librarianjs/mysql-meta.git"
+  },
+  "author": "Josh Vanderwillik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/librarianjs/mysql-meta/issues"
+  },
+  "homepage": "https://github.com/librarianjs/mysql-meta",
+  "dependencies": {
+    "bluebird": "^2.9.25",
+    "hashids": "^1.0.1",
+    "mysql": "^2.6.2"
+  }
+}

@@ -1,6 +1,8 @@
 var assert = require( 'assert' )
 var MysqlMeta = require( '..' )
 
+var STEP_TIMEOUT = process.env.STEP_TIMEOUT || 3000
+
 describe( 'librarian-mysql-meta', function(){
   var record = {
     fileName: 'cats.png',
@@ -9,26 +11,37 @@ describe( 'librarian-mysql-meta', function(){
   }
 
   var engine = new MysqlMeta({
-    host: 'localhost:27017',
-    databaseName: 'mocha',
-    tableName: 'librarianTests'
+    user: 'root',
+    password: '',
+    databaseName: 'librarian_test',
+    tableName: 'files'
   })
 
   var dbRecord = null
   it( 'should insert a new record', function( done ){
+    this.timeout( STEP_TIMEOUT )
+
     engine.new( record, function( err, data ){
-      assert.ifError( err )
-      assert( !!data, 'Data is falsey' )
-      for( var key in record ){
-        assert.equal( data[ key ], record[ key ], key + ' is different in saved record' )
+      try {
+        if( err ) throw err
+
+        assert( !!data, 'Data is falsey' )
+        for( var key in record ){
+          assert.equal( data[ key ], record[ key ], key + ' is different in saved record' )
+        }
+
+        dbRecord = data
+      } catch ( err ){
+        return done( err )
       }
 
-      dbRecord = data
       done()
     })
   })
 
   it( 'should retrieve that record', function( done ){
+    this.timeout( STEP_TIMEOUT )
+
     engine.get( '' + dbRecord.id, function( err, data ){
       assert.ifError( err )
       assert( data !== null, 'Record is null' )
@@ -42,6 +55,8 @@ describe( 'librarian-mysql-meta', function(){
   })
 
   it( 'should return false for a non-existant record', function( done ){
+    this.timeout( STEP_TIMEOUT )
+
     engine.get( 'fake', function( err, result ){
       assert.ifError( err )
       assert.equal( result, false )
@@ -50,22 +65,35 @@ describe( 'librarian-mysql-meta', function(){
   })
 
   it( 'should allow fetching of all records', function( done ){
+    this.timeout( STEP_TIMEOUT )
+
     engine.all( function( err, result ){
-      assert.ifError( err )
-      assert( Array.isArray( result ), 'Result set is not an array' )
+      try {
+        if( err ) throw err
+        assert.ifError( err )
+        assert( Array.isArray( result ), 'Result set is not an array' )
+      } catch ( err ){
+        return done( err )
+      }
       done()
     })
   })
 
   it( 'should allow patching the filename', function( done ){
+    this.timeout( STEP_TIMEOUT )
+
     var newFilename = 'chipmunks.png'
 
     engine.patch( '' + dbRecord.id, {
       fileName: newFilename
     }, function( err, record ){
-      assert.ifError( err )
-      assert( record !== null, 'Record is null' )
-      assert.equal( record.fileName, newFilename )
+      try {
+        assert.ifError( err )
+        assert( record !== null, 'Record is null' )
+        assert.equal( record.fileName, newFilename )
+      } catch( e ){
+        return done( e )
+      }
       done()
     })
   })

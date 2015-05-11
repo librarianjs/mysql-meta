@@ -11,9 +11,20 @@ var express = require( 'express' )
 var librarian = require( 'librarian' )
 var MysqlMeta = require( 'librarian-mysql-meta' )
 var meta = new MysqlMeta({
-  host: '192.168.0.44:27017', // optional, defaults to 'localhost:27017'
-  secret: 'shhhhhh!', // optional, defaults to 'pumpkins are friends, not food'
-  collectionName: 'myUploads' // optional, defaults to 'libarian_upload'
+
+  // Connection option 1, pass details in a hash
+  host: '192.168.0.44', // optional, defaults to 'localhost'
+  port: 3306, // optional, defaults to 3306
+  databaseName: 'awesome_project', // optional, defaults to 'librarian'
+  user: 'archive_reader', // optional, defaults to 'librarian'
+  password: process.env.LIBRARIAN_DB_ACCESS_PASSWORD, // REQUIRED
+
+  // Connection option 2, pass a connectionString
+  // If you use this method, all information in option 1 will be ignored
+  connectionString: 'mysql://user:password@host/db',
+
+  tableName: 'librarian_uploads', // optional, defaults to 'files'
+  secret: 'whisper whisper' // optional, defaults to 'I AM PUNCHING YOUR SALAD'
 })
 
 var app = express()
@@ -28,5 +39,5 @@ app.listen( 8888, function(){
 
 ## Note
 
-Although this module relies on `hashids` to give a pseudo-random image id,
-this is **not meant to be cryptographically secure**.
+Although this module relies on [HashIds](http://hashids.org/) to give a pseudo-random image id,
+this is **not intended for security**, this is only used because `/files/adffDc` is better looking than `/files/2`.

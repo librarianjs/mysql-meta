@@ -1,4 +1,4 @@
-# Librarian Mongo Meta
+# Librarian MySQL Meta
 
 ## Installation
 ```

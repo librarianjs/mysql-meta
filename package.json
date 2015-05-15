@@ -1,5 +1,5 @@
 {
-  "name": "librarian-mongo-meta",
+  "name": "librarian-mysql-meta",
   "version": "1.0.0",
   "description": "LibrarianJS mysql metadata engine",
   "main": "lib/index.js",

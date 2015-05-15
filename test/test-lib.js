@@ -13,7 +13,7 @@ describe( 'librarian-mysql-meta', function(){
   var engine = new MysqlMeta({
     user: 'root',
     password: '',
-    databaseName: 'librarian_test',
+    database: 'librarian_test',
     tableName: 'files'
   })
 

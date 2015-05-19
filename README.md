@@ -24,7 +24,7 @@ var meta = new MysqlMeta({
   // If you use this method, all information in option 1 will be ignored
   connectionString: 'mysql://user:password@host/db',
 
-  tableName: 'librarian_uploads', // optional, defaults to 'files'
+  table: 'librarian_uploads', // optional, defaults to 'files'
   secret: 'whisper whisper' // optional, defaults to 'I AM PUNCHING YOUR SALAD',
 
   // You can provide a custom HashIds object if your needs are more specific

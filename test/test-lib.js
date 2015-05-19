@@ -14,7 +14,7 @@ describe( 'librarian-mysql-meta', function(){
     user: 'root',
     password: '',
     database: 'librarian_test',
-    tableName: 'files'
+    table: 'files'
   })
 
   var dbRecord = null

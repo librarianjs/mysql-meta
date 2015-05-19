@@ -10,6 +10,7 @@ $ npm install librarian-mysql-meta
 var express = require( 'express' )
 var librarian = require( 'librarian' )
 var MysqlMeta = require( 'librarian-mysql-meta' )
+var HashIds = require( 'hashids' )
 var meta = new MysqlMeta({
 
   // Connection option 1, pass details in a hash
@@ -24,7 +25,11 @@ var meta = new MysqlMeta({
   connectionString: 'mysql://user:password@host/db',
 
   tableName: 'librarian_uploads', // optional, defaults to 'files'
-  secret: 'whisper whisper' // optional, defaults to 'I AM PUNCHING YOUR SALAD'
+  secret: 'whisper whisper' // optional, defaults to 'I AM PUNCHING YOUR SALAD',
+
+  // You can provide a custom HashIds object if your needs are more specific
+  // Be aware that this will cause the secret option to be ignored
+  hasher: new HashIds( 'the dog is over there', 7, '0123456789abcdef' )
 })
 
 var app = express()

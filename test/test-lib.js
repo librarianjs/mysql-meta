@@ -1,5 +1,6 @@
 var assert = require( 'assert' )
 var MysqlMeta = require( '..' )
+var makeDb = require( './make-db.js' )
 
 var STEP_TIMEOUT = process.env.STEP_TIMEOUT || 3000
 
@@ -10,10 +11,14 @@ describe( 'librarian-mysql-meta', function(){
     mimeType: 'image/png'
   }
 
+  var options = makeDb()
+
   var engine = new MysqlMeta({
-    user: 'root',
-    password: '',
-    database: 'librarian_test',
+    host: options.host,
+    user: options.user,
+    password: options.password,
+    database: options.database,
+    port: options.port,
     table: 'files'
   })
 
